@@ -70,20 +70,18 @@ class M3u8DownloadIos {
 
   /// 下载m3u8  ts文件
   /// * -[url] 下载Url
-  static Future<Map<String, dynamic>> downloadIos({required String url}) async {
+  static Future<bool> downloadIos({required String url}) async {
     final data = await _channel.invokeMethod<bool>('downloadIos', {"url": url});
-    print(data);
-    Map<String, dynamic> result = Map<String, dynamic>();
-    // try {
-    //   final data = await _channel.invokeMethod<bool>('downloadIos',{"url": url});
-    //   print("_________(原始数据)_________data:$data");
-    //   result = Map<String, dynamic>.from(data);
-    //   print("_________(转换数据)_________result:$result");
-    // } on PlatformException catch (e) {
-    //   print(e.toString());
-    // }
-    return result;
+    return data;
   }
+
+  /// 暂停或者取消
+  /// * -[url] 下载Url
+  static Future<void> pause({required String url}) async {
+    final data = await _channel.invokeMethod<bool>('pause', {"url": url});
+    return data;
+  }
+  //pause
 
 
   /// 删除文件

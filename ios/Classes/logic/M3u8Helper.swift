@@ -144,6 +144,7 @@ class M3u8Helper {
     //暂停、取消
     static func pause(urlStr:String) {
         WLM3U.cancel(url: URL(string: urlStr)!)
+        updateState(4)
     }
     
     //

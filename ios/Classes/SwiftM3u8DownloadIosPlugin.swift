@@ -36,8 +36,15 @@ public class SwiftM3u8DownloadIosPlugin: NSObject, FlutterPlugin {
                 _ = M3u8Helper.attach(urlStr: url, completion: nil)
                 result(true)
             }
-            result(false)
-        }else if call.method == "removeFolder" {
+            result(true)
+        }else if call.method == "pause" {
+            if let url = arguments?["url"] as? String {
+                _ = M3u8Helper.pause(urlStr: url)
+                result(true)
+            }
+            result(true)
+        }
+        else if call.method == "removeFolder" {
             if let folderUrl = arguments?["folderUrl"] as? String, let rmFolder = arguments?["rmFolder"] as? Bool {
                 FileOperation.removeFolder(folderUrl: folderUrl,rmFolder: rmFolder)
             }
