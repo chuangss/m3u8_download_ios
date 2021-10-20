@@ -152,7 +152,7 @@ class M3u8Helper {
         WLM3U.cancel(url: URL(string: urlStr)!)
         updateState(4)
         if isDelete {
-            let m3u8FileName = workflow.model.name!
+            let m3u8FileName = workflow!.model.name!
             FileOperation.removeFolder(folderUrl: NSHomeDirectory() + "/Documents/WLM3U/\(m3u8FileName)",rmFolder: true)
         }
         

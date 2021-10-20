@@ -71,22 +71,20 @@ class M3u8DownloadIos {
   /// 下载m3u8  ts文件
   /// * -[url] 下载Url
   static Future<void> downloadIos({required String url}) async {
-    final data = await _channel.invokeMethod('downloadIos', {"url": url});
-    return data;
+    await _channel.invokeMethod('downloadIos', {"url": url});
   }
 
   /// 暂停或者取消
   /// * -[url] 下载Url
   static Future<void> pause({required String url}) async {
-    final data = await _channel.invokeMethod<bool>('pause', {"url": url});
-    return data;
+    await _channel.invokeMethod<bool>('pause', {"url": url});
   }
 
   /// 取消下载
   ///
   /// - [url] 下载链接地址
   /// - [isDelete] 取消时是否删除文件
-  static void cancel(String url, { bool isDelete = false}) async {
+  static Future<void> cancel(String url, { bool isDelete = false}) async {
     assert(url.isNotEmpty);
 
     await _channel.invokeMethod("cancel", { "url": url, "isDelete": isDelete });
