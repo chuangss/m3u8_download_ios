@@ -46,14 +46,19 @@ class M3u8Helper {
     
     static var debugMode:Bool = true
     
-//    static func printDebug(_ str:Any){
-//        if debugMode {
-//            print(str)
-//        }
-//    }
+    //    static func printDebug(_ str:Any){
+    //        if debugMode {
+    //            print(str)
+    //        }
+    //    }
     
     //
     static var md = DTModel()
+    
+    static func updateState(_ st:Int){
+        md.state = st
+        sendMsg()
+    }
     
     static func sendMsg(){
         printDebug("发送状态数据/n")
@@ -67,6 +72,7 @@ class M3u8Helper {
     
     //解析m3u8文件
     static func attach(urlStr:String, completion: AttachCompletion? = nil)->Workflow? {
+        updateState(1)
         md.url = urlStr
         let url = URL(string: urlStr)!
         do {
@@ -93,7 +99,7 @@ class M3u8Helper {
             return workflow
             
         } catch  {
-            printDebug(error.localizedDescription)
+            updateState(-1)
         }
         return nil
     }
@@ -102,8 +108,6 @@ class M3u8Helper {
     
     
     static func download(workflow: Workflow, progressCall: DownloadProgress? = nil, completion: DownloadCompletion? = nil, parsingCall: ParsingCall? = nil) {
-        md.state = 1
-        sendMsg()
         ///开始下载分片
         workflow.download(progress: { (progress, completedCount) in
             var text = ""
@@ -121,7 +125,7 @@ class M3u8Helper {
             md.speedText = text
             md.progress = progress.fractionCompleted
             md.progressText = pStr
-            sendMsg()
+            updateState(1)
         }, completion: { (result) in
             completion?(result)
             switch result {
@@ -130,9 +134,7 @@ class M3u8Helper {
                 self.getAllFilePath(dPath)
                 self.perform(workflow: workflow)
             case .failure(let error):
-                md.state = -1
-                sendMsg()
-                
+                updateState(-1)
                 printDebug("[Download Failure] " + error.localizedDescription)
             }
         })
@@ -157,8 +159,7 @@ class M3u8Helper {
     //解析 加密与未加密分别处理
     // 下载并写入key 修改m3u8文件 ff转码MP4
     static func perform(workflow: Workflow, parsingCall: ParsingCall? = nil){
-        md.state = 2
-        sendMsg()
+        updateState(2)
         let urlString:String = workflow.url.absoluteString
         let m3u8FileName = workflow.model.name!
         md.name = m3u8FileName
@@ -209,11 +210,9 @@ class M3u8Helper {
             //            _ = readLoactionFile(m3u8FilePathNew)
             printDebug("修改m3u8文件完成")
             self.getAllFilePath(m3Path)
-            
-            md.state = 3
             md.deletePath = m3Path + "/\(md.name)"
-            sendMsg()
             
+            updateState(3)
         }else{
             //未加密
             md.isDecryption = false
@@ -221,14 +220,12 @@ class M3u8Helper {
                 switch result {
                 case .success(let url):
                     printDebug("[Combine Success] " + url.path)
-                    md.state = 3
                     md.tsPath = url.path
                     md.deletePath = m3Path + "/\(md.name)"
-                    sendMsg()
                     getAllFilePath(dPath)
+                    updateState(3)
                 case .failure(let error):
-                    md.state = -2
-                    sendMsg()
+                    updateState(-2)
                     printDebug("[Combine Failure] " + error.localizedDescription)
                 }
             })
