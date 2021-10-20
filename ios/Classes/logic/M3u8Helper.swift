@@ -147,14 +147,25 @@ class M3u8Helper {
         updateState(4)
     }
     
-    //
-    static func resume(urlStr:String, completion: AttachCompletion? = nil) {
-        if let wf = workflow {
-            download(workflow: wf)
-        }else{
-            printDebug("重试失败")
+    //暂停、取消
+    static func cancel(urlStr:String, isDelete:Bool) {
+        WLM3U.cancel(url: URL(string: urlStr)!)
+        updateState(4)
+        if isDelete {
+            let m3u8FileName = workflow.model.name!
+            FileOperation.removeFolder(folderUrl: NSHomeDirectory() + "/Documents/WLM3U/\(m3u8FileName)",rmFolder: true)
         }
+        
     }
+    
+    //
+//    static func resume(urlStr:String, completion: AttachCompletion? = nil) {
+//        if let wf = workflow {
+//            download(workflow: wf)
+//        }else{
+//            printDebug("重试失败")
+//        }
+//    }
     
     
     //解析 加密与未加密分别处理

@@ -43,7 +43,14 @@ public class SwiftM3u8DownloadIosPlugin: NSObject, FlutterPlugin {
                 result(true)
             }
             result(true)
+        }else if call.method == "cancel" {
+            if let url = arguments?["url"] as? String, let isDelete = arguments?["isDelete"] as? Bool {
+                _ = M3u8Helper.cancel(urlStr: url, isDelete:isDelete)
+                result(true)
+            }
+            result(true)
         }
+        
         else if call.method == "removeFolder" {
             if let folderUrl = arguments?["folderUrl"] as? String, let rmFolder = arguments?["rmFolder"] as? Bool {
                 FileOperation.removeFolder(folderUrl: folderUrl,rmFolder: rmFolder)
