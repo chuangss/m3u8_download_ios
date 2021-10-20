@@ -1,0 +1,43 @@
+PODS:
+  - Alamofire (4.9.1)
+  - Flutter (1.0.0)
+  - flutter_ffmpeg/min-lts (0.4.2):
+    - Flutter
+    - mobile-ffmpeg-min (= 4.4.LTS)
+  - m3u8_download_ios (0.0.1):
+    - Flutter
+    - WLM3U
+  - mobile-ffmpeg-min (4.4.LTS)
+  - WLM3U (0.1.4):
+    - Alamofire
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - flutter_ffmpeg/min-lts (from `.symlinks/plugins/flutter_ffmpeg/ios`)
+  - m3u8_download_ios (from `.symlinks/plugins/m3u8_download_ios/ios`)
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - mobile-ffmpeg-min
+    - WLM3U
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  flutter_ffmpeg:
+    :path: ".symlinks/plugins/flutter_ffmpeg/ios"
+  m3u8_download_ios:
+    :path: ".symlinks/plugins/m3u8_download_ios/ios"
+
+SPEC CHECKSUMS:
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  flutter_ffmpeg: 3ec3912c74649851e6c3b1885511eef78142ac4f
+  m3u8_download_ios: 0d63f39644d1971d357fce41ab3397eea5e65986
+  mobile-ffmpeg-min: dd2fd38da2788ccb7be5720fc308cb69160820e7
+  WLM3U: 6d57596cc3993badc799ab1121ac9e1bb8b15d2a
+
+PODFILE CHECKSUM: 05a5ece2554e1bba416c6e10ab10d68e8120224f
+
+COCOAPODS: 1.10.1
