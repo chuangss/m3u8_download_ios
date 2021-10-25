@@ -4,6 +4,8 @@ import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
 import 'package:m3u8_download_ios/dt_model.dart';
 import 'package:m3u8_download_ios/m3u8_download_ios.dart';
 
+typedef DtModelCallback = void Function(DtModel md);
+
 class M3u8HelperIos {
   static final M3u8HelperIos _instance = M3u8HelperIos._internal();
 
@@ -21,6 +23,8 @@ class M3u8HelperIos {
   String documentsPath = "";
   bool isInit = false;
 
+  DtModelCallback? call;
+
   Future<bool> init() async {
     _flutterFFmpeg = FlutterFFmpeg();
     controller = StreamController(onListen: () {
@@ -30,14 +34,19 @@ class M3u8HelperIos {
     });
     controller?.stream.listen(onData);
 
-    await M3u8DownloadIos.initializeIos(debugModel: false, ctr: controller);
+    await M3u8DownloadIos.initializeIos(debugModel: true, ctr: controller);
     documentsPath = await M3u8DownloadIos.documentsPath();
     isInit = true;
     return true;
   }
 
-  void downloadIos({required String url}) {
+  void downloadIos({required String url, DtModelCallback? dtCallback}) {
+    call = dtCallback;
     M3u8DownloadIos.downloadIos(url: url);
+  }
+
+  void listFolder() async{
+    M3u8DownloadIos.listFolder(folderUrl: await M3u8DownloadIos.documentsPath());
   }
 
   void onData(DtModel model) {
@@ -46,6 +55,9 @@ class M3u8HelperIos {
     final state = model.state!;
     if (state == 3) {
       perform(model);
+    }
+    if (call != null) {
+      call!(model);
     }
   }
 

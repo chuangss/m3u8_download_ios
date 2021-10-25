@@ -1,4 +1,3 @@
-
 ////数据标识
 //     public var isDtModel: Bool = true
 //
@@ -54,6 +53,9 @@ class DtModel {
   String? tsPath;
   String? deletePath;
 
+  //本地存储名字
+  String? localName;
+
   DtModel({this.isDtModel,
     this.url,
     this.name,
@@ -67,7 +69,8 @@ class DtModel {
     this.m3u8FilePath,
     this.m3u8FilePathNew,
     this.tsPath,
-    this.deletePath});
+    this.deletePath,
+    this.localName});
 
   DtModel.fromJson(Map<String, dynamic> json) {
     isDtModel = json['isDtModel'];
@@ -84,6 +87,7 @@ class DtModel {
     m3u8FilePathNew = json['m3u8FilePathNew'];
     tsPath = json['tsPath'];
     deletePath = json['deletePath'];
+    localName = json['localName'];
   }
 
   Map<String, dynamic> toJson() {
@@ -116,6 +120,8 @@ class DtModel {
       data['tsPath'] = this.tsPath;
     if (this.deletePath != null)
       data['deletePath'] = this.deletePath;
+    if (this.localName != null)
+      data['localName'] = this.localName;
     return data;
   }
 }

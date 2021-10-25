@@ -110,16 +110,20 @@ class M3u8Helper {
     static func download(workflow: Workflow, progressCall: DownloadProgress? = nil, completion: DownloadCompletion? = nil, parsingCall: ParsingCall? = nil) {
         ///开始下载分片
         workflow.download(progress: { (progress, completedCount) in
+            
             var text = ""
             let mb = Double(completedCount) / 1024 / 1024
             if mb >= 0.1 {
                 text = String(format: "%.1f", mb) + " M/s"
             } else {
-                text = String(completedCount / 1024) + " K/s"
+                text = String(format: "%.2f", Double(completedCount) / 1024) + " K/s"
             }
             
-            let pStr = String(format: "%.2f", progress.fractionCompleted * 100) + " %"
-            printDebug("download speed: \(text)" + ", download progress:" + pStr)
+            let pStr = String(format: "%.2f", progress.fractionCompleted * 100) + "% "
+            if md.totalSize == 0 {
+                md.totalSize = self.workflow!.model.totalSize!
+            }
+            printDebug("download speed: \(text)" + ", download progress:" + pStr + "总大小：\(md.totalSize)")
             
             md.speed = completedCount
             md.speedText = text

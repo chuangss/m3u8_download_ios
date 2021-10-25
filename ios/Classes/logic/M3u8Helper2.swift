@@ -117,7 +117,7 @@
 //                text = String(completedCount / 1024) + " K/s"
 //            }
 //            
-//            let pStr = String(format: "%.2f", progress.fractionCompleted * 100) + " %"
+//            let pStr = String(format: "%.2f", progress.fractionCompleted * 100) + "% "
 //            print("download speed: \(text)" + ", download progress:" + pStr)
 //            call?(completedCount, progress.fractionCompleted, text, pStr)
 //            progressCall?(progress, completedCount)

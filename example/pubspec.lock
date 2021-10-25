@@ -65,9 +65,11 @@ packages:
   flutter_ffmpeg:
     dependency: "direct main"
     description:
-      name: flutter_ffmpeg
-      url: "https://pub.flutter-io.cn"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: fca32a79bc3ce7bb5fc76f5de0f5af5de9de3b61
+      url: "https://github.com/tanersener/flutter-ffmpeg.git"
+    source: git
     version: "0.4.2"
   flutter_test:
     dependency: "direct dev"

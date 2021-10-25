@@ -11,11 +11,11 @@ public class SwiftM3u8DownloadIosPlugin: NSObject, FlutterPlugin {
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         
-//        print("call method: \(call.method)")
+        //        print("call method: \(call.method)")
         
         var arguments:Dictionary<String, Any>?
         if call.arguments != nil {
-//            print("call.arguments: \(call.arguments!)")
+            //            print("call.arguments: \(call.arguments!)")
             arguments = call.arguments as? Dictionary<String, Any>
         }
         
@@ -36,21 +36,26 @@ public class SwiftM3u8DownloadIosPlugin: NSObject, FlutterPlugin {
                 _ = M3u8Helper.attach(urlStr: url, completion: nil)
                 result(true)
             }
-            result(true)
+            result(false)
         }else if call.method == "pause" {
             if let url = arguments?["url"] as? String {
-                _ = M3u8Helper.pause(urlStr: url)
+                M3u8Helper.pause(urlStr: url)
                 result(true)
             }
-            result(true)
+            result(false)
         }else if call.method == "cancel" {
             if let url = arguments?["url"] as? String, let isDelete = arguments?["isDelete"] as? Bool {
-                _ = M3u8Helper.cancel(urlStr: url, isDelete:isDelete)
+                M3u8Helper.cancel(urlStr: url, isDelete:isDelete)
                 result(true)
             }
-            result(true)
+            result(false)
         }
         
+        else if call.method == "removeFile" {
+            if let sourceUrl = arguments?["sourceUrl"] as? String{
+                FileOperation.removeFile(sourceUrl: sourceUrl)
+            }
+        }
         else if call.method == "removeFolder" {
             if let folderUrl = arguments?["folderUrl"] as? String, let rmFolder = arguments?["rmFolder"] as? Bool {
                 FileOperation.removeFolder(folderUrl: folderUrl,rmFolder: rmFolder)

@@ -12,7 +12,10 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_ffmpeg: ^0.4.0
+#  flutter_ffmpeg: ^0.4.2
+  flutter_ffmpeg:
+    git:
+      url: "https://github.com/tanersener/flutter-ffmpeg.git"
   m3u8_download_ios:
     path: ../
 
